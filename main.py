@@ -51,10 +51,18 @@ app = FastAPI(
     ]
 )
 
-# for obj in os.scandir("app"):
-#     if obj.is_dir():
-#         if os.path.isfile(f"app/{obj.name}/router.py"):
-#             r = importlib.import_module(f"app.{obj.name}.router")
-#             app.include_router(r.router)
-#
-app.include_router(router)
+for obj in os.scandir("app"):
+    if obj.is_dir():
+        if os.path.isfile(f"app/{obj.name}/router.py"):
+            r = importlib.import_module(f"app.{obj.name}.router")
+        app.include_router(r.router)
+
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: str = None):
+    return {"item_id": item_id, "q": q}

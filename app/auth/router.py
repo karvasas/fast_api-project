@@ -14,7 +14,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
     description=doc_e(UnexpectedErr1, UnexpectedErr2)
 )
 def start() -> AuthStartResponse:
-    return AuthStartResponse(state="OK")
+    return AppResponse[AuthStartResponse](data={'state': "OK"})
 
 
 @router.get(
@@ -23,4 +23,4 @@ def start() -> AuthStartResponse:
     description=doc_e(UnexpectedErr1)
 )
 def get_item(item_id: int) -> AuthItemResponse:
-    return AuthItemResponse(item=item_id)
+    return AppResponse[AuthItemResponse](data={'item': item_id})
